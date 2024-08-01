@@ -28,50 +28,30 @@ extension View {
             .modifier(RoundedNumber(backgroundColor: backgroundColor))
         }
     }
-    
-
 struct ContentView: View {
     
   @State var buttonBackground: [Color] = [.red, .green, .yellow, .purple, .pink, Color(#colorLiteral(red: 1, green: 0.3551669878, blue: 0.1194818034, alpha: 1))]
+    private let alignment: [Alignment] = [.leading, .center, .trailing]
+    
     var body: some View {
         
-        VStack(spacing: 20.0) {
-            
-            Button(action: 
-                    { buttonBackground.shuffle()})
-            {
+        VStack {
+            ForEach(1...3, id: \.self) { index in
+                Button(action: shaffleBackgroundArray)
+                {
+                    Text("\(index)")
+                        .roundedNumber(backgroundColor: buttonBackground.randomElement())
+                        .frame(width: 190, alignment: alignment[index - 1])
+                }
                 
-                Text("1")
-                    .roundedNumber(backgroundColor: buttonBackground.randomElement())
-                    .frame(width: 190, alignment: .leading)
             }
-       
-            Button(action:
-                    {
-                buttonBackground.shuffle()
-            })
-            {
-                
-                Text("2")
-                    .roundedNumber(backgroundColor: buttonBackground.randomElement())
-                    .frame(width: 190, alignment: .center)
-            }
-            
-            Button(action:
-                    {
-                buttonBackground.shuffle()
-            })
-            {
-                
-                Text("3")
-                    .roundedNumber(backgroundColor: buttonBackground.randomElement())
-                    .frame(width: 190, alignment: .trailing)
-            }
-            
-        
         }
-        
+
     }
+    func shaffleBackgroundArray(){
+        buttonBackground.shuffle()
+    }
+    
 }
 
 #Preview {
